@@ -1,0 +1,105 @@
+
+{% extends 'main/base.html'%}
+{% load static %}
+{% block content %}
+<div class="container">
+<img src="{% static 'main/images/pen.jpg' %}">
+    {% if request.user.is_authenticated %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10 col-sm-12 text-center">
+            <h1 class="display-2">Your Profile</h1>
+            <div class="d-flex justify-content-center mt-5">
+{% if detail.sc_st == "Student" %}
+<dl class="row">
+  <dt class="col-sm-3">Name</dt>
+  <dd class="col-sm-9">{{ user.first_name }} {{user.last_name}}</dd>
+
+  <dt class="col-sm-3">Email</dt>
+  <dd class="col-sm-9">{{ user.email }}
+  </dd>
+
+  <dt class="col-sm-3">Phone no.</dt>
+  <dd class="col-sm-9">{{ detail.phone }}</dd>
+  <dt class="col-sm-3">I am a</dt>
+  <dd class="col-sm-9">{{ detail.sc_st  }}</dd>
+  <dt class="col-sm-3">Age.</dt>
+  <dd class="col-sm-9">{{ detail.age }}</dd>
+   <dt class="col-sm-3">Disability</dt>
+  <dd class="col-sm-9">{{ detail.disability }}</dd>
+  <dt class="col-sm-3">classes.</dt>
+  <dd class="col-sm-9">{{ detail.classes }}</dd>
+<dt class="col-sm-3">Course</dt>
+  <dd class="col-sm-9">{{ detail.course  }}</dd>
+<dt class="col-sm-3">Languages Known</dt>
+  <dd class="col-sm-9">{{ detail.lang }}</dd>
+<dt class="col-sm-3">Preferred Instruction language</dt>
+  <dd class="col-sm-9">{{ detail.pref_lang }}</dd>
+<dt class="col-sm-3">School</dt>
+  <dd class="col-sm-9">{{ detail.school }}</dd>
+<dt class="col-sm-3">Type of Service</dt>
+  <dd class="col-sm-9">{{ detail.paid_unpaid }}</dd>
+<dt class="col-sm-3">Location</dt>
+  <dd class="col-sm-9">{{ detail.location }}</dd>
+<dt class="col-sm-3">Pincode</dt>
+  <dd class="col-sm-9">{{ detail.pincode }}</dd>
+</dl>
+ {% else %}
+<dl class="row">
+  <dt class="col-sm-3">Name</dt>
+  <dd class="col-sm-9">{{ user.first_name }} {{user.last_name}}</dd>
+
+  <dt class="col-sm-3">Email</dt>
+  <dd class="col-sm-9">{{ user.email }}
+  </dd>
+
+  <dt class="col-sm-3">Phone no.</dt>
+  <dd class="col-sm-9">{{ detail.phone }}</dd>
+  <dt class="col-sm-3">I am a</dt>
+  <dd class="col-sm-9">{{ detail.sc_st  }}</dd>
+  <dt class="col-sm-3">Age.</dt>
+  <dd class="col-sm-9">{{ detail.age }}</dd>
+   <dt class="col-sm-3">Qualification</dt>
+  <dd class="col-sm-9">{{ detail.qualification }}</dd>
+<dt class="col-sm-3">Qualification Course</dt>
+  <dd class="col-sm-9">{{ detail.qual_course  }}</dd>
+<dt class="col-sm-3">Language 1</dt>
+  <dd class="col-sm-9">{{ detail.lang1 }}</dd>
+<dt class="col-sm-3">Language 2</dt>
+  <dd class="col-sm-9">{{ detail.lang2 }}</dd>
+<dt class="col-sm-3">Language 3</dt>
+  <dd class="col-sm-9">{{ detail.lang3 }}</dd>
+<dt class="col-sm-3">classes.</dt>
+  <dd class="col-sm-9">{{ detail.classes }}</dd>
+<dt class="col-sm-3">Course</dt>
+  <dd class="col-sm-9">{{ detail.course }}</dd>
+<dt class="col-sm-3">Type of Service</dt>
+  <dd class="col-sm-9">{{ detail.paid_unpaid }}</dd>
+<dt class="col-sm-3">Location</dt>
+  <dd class="col-sm-9">{{ detail.location }}</dd>
+<dt class="col-sm-3">Pincode</dt>
+  <dd class="col-sm-9">{{ detail.pincode }}</dd>
+</dl>               
+ {% endif %}               
+            </div>
+        </div>
+<div class="d-flex justify-content-center mt-5">
+<a href="{% url 'prof' %}" class="btn btn-dark mr-2">Edit Profile</a>
+<a href="{% url 'logout' %}" class="btn btn-light mr-2">Logout</a></div>
+    </div>
+    {% else %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10 col-sm-12 text-center">
+            <h1 class="display-2">Welcome to Saiscribe.in</h1>
+            <p class="mt-3 lead">where talent meets opportunity!!!</p>
+            <div class="d-flex justify-content-center mt-5">
+                <a href="{% url 'sc' %}" class="btn btn-light mr-2">Register as Scribe</a>
+                <a href="{% url 'st' %}" class="btn btn-dark">Register as Student</a>
+            </div>
+            <div class="d-flex justify-content-center mt-5">
+                <a href="{% url 'login' %}" class="btn btn-primary mr-2">Login</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

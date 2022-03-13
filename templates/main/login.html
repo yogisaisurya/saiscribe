@@ -1,0 +1,47 @@
+{% extends 'main/base.html'%}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10 col-sm-12 text-center">
+            <h1 class="display-2">Login</h1>
+               {% if messages %}
+                          {% for mess in messages %}
+                          <div class="alert alert-{{mess.tags}}" role="alert">
+                            {{mess}}
+                          </div>
+                          {% endfor %}
+                        {% endif %} 
+                <br>
+            {% if otp %}
+                <form method="POST">
+              {% csrf_token %}
+              <fieldset class="form-group">
+                 
+                 <div class="input-group mb-3">
+                 <span class="input-group-text" id="basic-addon1">OTP</span>
+                 <input type="text" class="form-control" placeholder="Enter your OTP" aria-label="OTP" aria-describedby="basic-addon1" name = 'otp'>
+                 <input type="hidden" name = 'usr' value= "{{usr.username}}">
+               </div>
+              </fieldset>
+              <div class="form-group"><button class="btn-btn-outline-info" type="submit">Verify</button></div>
+  
+            </form>
+
+                </form>
+            {% else %}
+            <form method="POST">
+              {% csrf_token %}
+              <fieldset class="form-group">
+                 
+                 {{ form|crispy }}
+              </fieldset>
+              <div class="form-group"><button class="btn-btn-outline-info" type="submit">Login</button></div>
+              <a href="{% url 'password_reset' %}">Forgot Password</a>
+  
+</form>
+{% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends 'main/base.html'%}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10 col-sm-12 text-center">
+            <h1 class="display-2">Register</h1>
+             {% if messages %}
+                          {% for mess in messages %}
+                          <div class="alert alert-{{mess.tags}}" role="alert">
+                            {{mess}}
+                          </div>
+                          {% endfor %}
+                        {% endif %} 
+                <br>
+
+            <form method="POST">
+              {% csrf_token %}
+              <fieldset class="form-group">
+                 
+                 {{ form|crispy }}
+              </fieldset>
+              <div class="form-group"><button class="btn-btn-outline-info" type="submit">Register</button></div>
+  
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
