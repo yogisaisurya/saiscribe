@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .forms import SignUpForm, RegisterSc, RegisterSt
+from .forms import SignUpForm, RegisterSc, RegisterSt, UpdateSc
 from django.contrib.auth.models import User
 from django.contrib import messages
 import random
@@ -9,6 +9,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
+from django.views.generic.edit import UpdateView, DeleteView
 
 
 usr = None
@@ -183,7 +184,7 @@ def sc1(request, *args, **kwargs):
             scribe_form.save()
             return redirect('login')
     else:
-        form = RegisterSc(request.POST)
+        form = RegisterSc()
 
     return render(request, 'main/sc1.html', {'form': form})
 
@@ -196,7 +197,7 @@ def st1(request, *args, **kwargs):
             student_form.save()
             return redirect('login')
     else:
-        form = RegisterSt(request.POST)
+        form = RegisterSt()
 
     return render(request, 'main/st1.html', {'form': form})
 
@@ -216,6 +217,29 @@ def home(request):
     return render(request, 'main/index.html')
 
 def prof(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user = User.objects.get(username=request.user)
+            if not Student.objects.filter(user=user):
+                detail = Scribe.objects.get(user=user)
+                form = RegisterSc(request.POST, instance=detail)
+            else:
+                detail = Student.objects.get(user=user)
+                form = RegisterSt(request.POST, instance= detail)
+            if form.is_valid():
+                form.save()
+                return redirect('home')
+        else:
+            user = User.objects.get(username=request.user)
+            if not Student.objects.filter(user=user):
+                detail = Scribe.objects.get(user=user)
+                form = RegisterSc(instance=detail)
+            else:
+                detail = Student.objects.get(user=user)
+                form = RegisterSt(instance= detail)
+        return render(request, 'main/prof.html', {'form': form})
+    else:
+        return redirect('home')
     return render(request, 'main/prof.html')
 
 def about(request):
